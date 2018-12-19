@@ -64,13 +64,13 @@ svgSection.selectAll("circle")
             .on("mousemove",function(d){
                 tooltip
                     .style("opacity","1")
-                    .style("left",d3.event.x+"px")
-                    .style("top",d3.event.y+"px")
+                    .style("left",d3.event.x - (tooltip.node().offsetWidth/2)+"px")
+                    .style("top",d3.event.y+25+"px")
                     .html(`
                         <p><strong>Region</strong> : ${d.region}</p>
-                        <p><strong>Births</strong> : ${d.births}</p>
+                        <p><strong>Births</strong> : ${d.births.toLocaleString()}</p>
                         <p><strong>Life Expectancy</strong> : ${d.lifeExpectancy}</p>
-                        <p><strong>Population</strong> : ${d.population}</p>
+                        <p><strong>Population</strong> : ${d.population.toLocaleString()}</p>
                         <p><strong>Area</strong> : ${d.area}</p>
                     `);
             })
