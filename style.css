@@ -6,3 +6,12 @@ svg {
   stroke: #ceb79b;
   stroke-dasharray: 8,6;
 }
+
+.tooltip{
+  opacity: 0;
+  position: absolute;
+  background-color: rgba(219, 235, 206, 0.849);
+  pointer-events: none;
+  padding: 10px 10px;
+  border-radius: 9px;
+}

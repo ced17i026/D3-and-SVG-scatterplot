@@ -6,6 +6,10 @@ var svgSection = d3.select("svg")
     .attr("width",width)
     .attr("height",height)
         .style("padding","20px 20px");
+//appending tooltip vaccant div
+var tooltip = d3.select("body")
+    .append("div")
+        .classed("tooltip",true);
 //scale y-axis
 var yScale = d3.scaleLinear()
                 .domain(d3.extent(birthData2011,d => d.lifeExpectancy))
@@ -21,7 +25,7 @@ var colorScale = d3.scaleLinear()
 //scale raius of circle base on number of births
 var scaleRadius = d3.scaleLinear()
                     .domain(d3.extent(birthData2011,d => d.births))
-                    .range([5,15]);
+                    .range([5,40]);
 //define the x-axis on scale xScale
 var xAxis = d3.axisBottom(xScale)
                 .tickSize(-height+2*padding)
@@ -56,7 +60,24 @@ svgSection.selectAll("circle")
                 })
                     .attr("fill", d => {//fill the color in the circle as per color scale
                         return colorScale(d.population/d.area);
-                    });
+                    })
+            .on("mousemove",function(d){
+                tooltip
+                    .style("opacity","1")
+                    .style("left",d3.event.x+"px")
+                    .style("top",d3.event.y+"px")
+                    .html(`
+                        <p><strong>Region</strong> : ${d.region}</p>
+                        <p><strong>Births</strong> : ${d.births}</p>
+                        <p><strong>Life Expectancy</strong> : ${d.lifeExpectancy}</p>
+                        <p><strong>Population</strong> : ${d.population}</p>
+                        <p><strong>Area</strong> : ${d.area}</p>
+                    `);
+            })
+            .on("mouseout",function(){
+                tooltip
+                    .style("opacity","0");
+            });
 //append text to show the x-axis name
 d3.select("svg")
     .append("text")
